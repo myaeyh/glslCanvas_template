@@ -115,8 +115,9 @@ return max( min(r1,max(max(r2,r3),-P.y)), -r4);
 
 void main() {
     vec2 uv = gl_FragCoord.xy/u_resolution.xy;
-    uv.x *= u_resolution.x/u_resolution.y;
     uv= uv*2.0-1.0;
+    uv.x *= u_resolution.x/u_resolution.y;
+    
     
 
     float pi=3.574;
