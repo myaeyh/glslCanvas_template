@@ -92,10 +92,10 @@ void main() {
 
     float step =1./6.;
     if(shading<=step){
-        stepValue = 0.2*(Time*0.5+0.59);//monalisa's blur step
+        stepValue = 0.035*(Time*0.5+0.59);//monalisa's blur step
     }
     if( shading > step && shading <= 2. * step ){
-        stepValue = 0.001*(Time*0.5+0.59);
+        stepValue = 0.02*(Time*0.5+0.59);
     }
     if( shading > 2. * step && shading <= 3. * step ){
 		stepValue = 0.00*(Time*0.5+0.59);
@@ -103,7 +103,7 @@ void main() {
     }   
 
     if( shading > 3. * step && shading <= 4. * step ){
-		stepValue = 0.2*(Time*0.1);
+		stepValue = 0.002*(Time*0.5+0.59);//(Time*0.1)
     }
     
     // if( shading > 4. * step && shading <= 5. * step ){
