@@ -35,7 +35,8 @@ vec2 random2( vec2 p ) {
 void main() {
     float stepValue = 0.005;
     float amplitude=0.5*sin(u_time)+0.59;//再小的話會出現太多小油滴:(
-    
+    float Time=sin(u_time);
+    //amplitude = (Time*0.5+0.59)
 
 
     vec2 st = gl_FragCoord.xy / u_resolution.xy;//for shader
@@ -86,23 +87,24 @@ void main() {
 		//m_dist 小于阈值 0.060，那么阶梯函数返回1，color 就会增加1。
 		//否则，返回0，color 不变。
     
-    color += step(amplitude, m_dist);
+    color += step((Time*0.5+0.59), m_dist);
     // color += mix(vec3(0.075,0.114,0.329),vec3(0.845,0.732,0.586),m_dist*0.0001);
 
     float step =1./6.;
     if(shading<=step){
-        stepValue = 0.2*amplitude;//monalisa's blur step
+        stepValue = 0.2*(Time*0.5+0.59);//monalisa's blur step
     }
     if( shading > step && shading <= 2. * step ){
-        stepValue = 0.001*amplitude;
+        stepValue = 0.001*(Time*0.5+0.59);
     }
     if( shading > 2. * step && shading <= 3. * step ){
-		stepValue = 0.00*amplitude;
+		stepValue = 0.00*(Time*0.5+0.59);
         
     }   
-    // if( shading > 3. * step && shading <= 4. * step ){
-	// 	stepValue = 0.0;
-    // }
+
+    if( shading > 3. * step && shading <= 4. * step ){
+		stepValue = 0.2*(Time*0.1);
+    }
     
     // if( shading > 4. * step && shading <= 5. * step ){
     //     stepValue = 0.;
