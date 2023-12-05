@@ -34,70 +34,24 @@ vec2 random2( vec2 p ) {
 
 void main() {
     float stepValue = 0.005;
-    float amplitude=0.5*sin(u_time)+0.59;//再小的話會出現太多小油滴:(
     
-
-
     vec2 st = gl_FragCoord.xy / u_resolution.xy;//for shader
     vec2 uv = gl_FragCoord.xy / u_resolution.xy;//for picture
-    float shading= texture2D(u_tex0, uv).r;
-//'''CC
-    st.x *= u_resolution.x/u_resolution.y;
-    vec3 color = vec3(.0);//雖然疊圖之後顏色就會被蓋掉但也不能省
-    // Scale
-    st *= 3.;
-    // Tile the space
-    vec2 i_st = floor(st);
-    vec2 f_st = fract(st);
-
-    float m_dist = 1.;  // minimum distance
+    float shading= texture2D(u_tex1, uv).r;
+	 vec3 color = vec3(.0);//雖然疊圖之後顏色就會被蓋掉但也不能省
     
-    // float movinysty=abs(sin(u_time)*1.5-2.)-st.y*0.5;//很怪!
-    // if(movinysty<1.||movinysty>2.){//haven't done
-    
-    // if(st.y<1.||st.y>2.){ //原本想做遮罩但發現做不出來
-        
-    for (int j= -1; j <= 1; j++ ) {
-        for (int i= -1; i <= 1; i++ ) {
-            // Neighbor place in the grid當前迭代的鄰居在瓦片中的位置
-            vec2 neighbor = vec2(float(i),float(j));
-
-            // Random position from current + neighbor place in the grid
-            vec2 offset = random2(i_st + neighbor);
-
-            // Animate the offset //adjust cell speed
-            offset =0.5+0.5*sin(0.352*u_time + 6.2831*offset);
-
-            // Position of the cell
-//*****假设 neighbor + offset 在格子中的位置是 (0.8, 0.3)，而 f_st 是当前瓦片的小数部分 (0.4, 0.2)，那么减去 f_st 后的 pos 就是 (0.4, 0.1)，这是相对于当前瓦片的局部坐标。
-//这种调整确保了在 metaballs 的计算中，所有的相对位置都是相对于当前瓦片的，从而使 metaballs 效果在每个瓦片内部都是正确的。
-			vec2 pos = neighbor + offset - f_st;
-
-            // Cell distance單元格到原點的距離 dist
-            float dist = length(pos);
-
-            // Metaball it!
-						//m_dist 更新為當前最小距離。這樣，最終的 m_dist 將包含在九個鄰居中的最小距離，形成 metaballs 的效果。
-            m_dist = min(m_dist, m_dist*dist);
-        }
-    }
-    
-    // Draw cell
-		//m_dist 小于阈值 0.060，那么阶梯函数返回1，color 就会增加1。
-		//否则，返回0，color 不变。
-    
-    color += step(amplitude, m_dist);
+    // color += step(.5, m_dist);
     // color += mix(vec3(0.075,0.114,0.329),vec3(0.845,0.732,0.586),m_dist*0.0001);
 
     float step =1./6.;
     if(shading<=step){
-        stepValue = 0.2*amplitude;//monalisa's blur step
+        stepValue = 0.0;//monalisa's blur step
     }
     if( shading > step && shading <= 2. * step ){
-        stepValue = 0.001*amplitude;
+        stepValue = 0.01;
     }
     if( shading > 2. * step && shading <= 3. * step ){
-		stepValue = 0.00*amplitude;
+		stepValue = 0.5;
         
     }   
     // if( shading > 3. * step && shading <= 4. * step ){
@@ -138,7 +92,7 @@ void main() {
     
     for (int i = 0; i < KernelSize; i++)
     {
-        vec4 tmp = texture2D(u_tex0, uv + Offset[i]);
+        vec4 tmp = texture2D(u_tex1, uv + Offset[i]);
         sum += tmp * Kernel[i];
     }
     gl_FragColor = sum/16.0+vec4(color,1.);
