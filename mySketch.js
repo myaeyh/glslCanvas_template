@@ -249,12 +249,12 @@ function draw() {
 	// 	theShader.setUniform("u_texture_5", texture_B5);
 	// }
 	if (dropDown_style.selectedOption == 'No.2') {
-		theShader.setUniform("u_texture_0", texture_C0);
-		theShader.setUniform("u_texture_1", texture_C1);
-		theShader.setUniform("u_texture_2", texture_C2);
-		theShader.setUniform("u_texture_3", texture_C3);
-		theShader.setUniform("u_texture_4", texture_C4);
-		theShader.setUniform("u_texture_5", texture_C5);
+		theShader.setUniform("u_texture_5", texture_C0);
+		theShader.setUniform("u_texture_4", texture_C1);
+		theShader.setUniform("u_texture_3", texture_C2);
+		theShader.setUniform("u_texture_2", texture_C3);
+		theShader.setUniform("u_texture_1", texture_C4);
+		theShader.setUniform("u_texture_0", texture_C5);
 	}
 	// else if (dropDown_style.selectedOption == '4. Pencil') {
 	// 	theShader.setUniform("u_texture_0", texture_D0);
