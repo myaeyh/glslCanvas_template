@@ -133,6 +133,7 @@ vec3 colorTransform(vec3 color)
 float breathing=(exp(sin(u_time*2.0*3.14159/8.0)) - 0.36787944)*0.42545906412;
 float mouseEffect(vec2 uv, vec2 mouse, float size)
 {
+    // size = 0.01 * min(u_resolution.x, u_resolution.y);
     float dist=length(uv-mouse);
     return smoothstep(size, size+0.2*(breathing+0.5), dist);  //size
 }
@@ -148,7 +149,7 @@ void main()
     vec2 uv_mouse = u_mouse / u_resolution.xy; //通過除以屏幕的分辨率( u_resolution.xy包含屏幕分辨率的統一變量)，將滑鼠位置轉換為規範化的坐標系，即在 [0, 1] 的範圍內。
     uv_mouse.x *= u_resolution.x / u_resolution.y;
 
-    float highlight_size = 0.1;//滑鼠高光筆
+    float highlight_size = 0.02;//滑鼠高光筆
     float texture_mouse = mouseEffect(uv, uv_mouse, highlight_size*-sin(u_time));//因為光暈的跟呼吸效果可能會打架
 
 //u_title是從js設定字體的左下角的自，在texturetitle的地方使用到u_title

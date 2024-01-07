@@ -28,12 +28,12 @@ let control = { //稍後會用來當作template控制元件
 	speed_y: 0.05,
 	still: false,
 
-	r: true,
+	r: false,
 	g: false,
 	b: false,
 
 	color_ink:[0, 0, 0], //[99, 125, 117],
-	color_backgroung: [255,255,255,],//[247, 222, 212],
+	color_backgroung: [255,255,255],//[247, 222, 212],
 }
 
 var dropDown_style = {
@@ -64,11 +64,11 @@ window.onload = function() {
 	gui_speed.add(control, 'speed_y', -0.2, 0.2).name("Y-axis").step(0.01);
 	// gui_speed.add(control, 'still').name("Still");
 	
-	let gui_rgb = gui.addFolder("RGB");
+	let gui_rgb = gui.addFolder("Click Here");
 	gui_rgb.open();
-	gui_rgb.add(control, 'r').name("R");
-	gui_rgb.add(control, 'g').name("G");
-	gui_rgb.add(control, 'b').name("B");
+	gui_rgb.add(control, 'r').name("Show");
+	// gui_rgb.add(control, 'g').name("G");
+	// gui_rgb.add(control, 'b').name("B");
 
 	// let gui_color = gui.addFolder("Color");
 	// gui_color.open();
@@ -162,44 +162,46 @@ function setup() {
 //作品介紹區，create graphic都是p5.js的渲染引擎，全部都去找p5的reference
 	let width_fixed = 1024;//why數字越大框框越窄?
 
-	title = createGraphics(width_fixed, windowHeight, WEBGL);
+	title = createGraphics(2048, windowHeight, WEBGL);
 	title.pixelDensity(PIXEL_DENSITY);
 	title.textFont(f);
 	title.textSize(120);
 	title.textAlign(LEFT, BASELINE);
 	title.fill(color(255, 255, 255));
-	title.text("HW", 0, 0);//後面兩個是移動位子!!!但單位不知道是誰麼好像是跟著textalign一起的
+	title.text("Experiment", 0, 0);//後面兩個是移動位子!!!但單位不知道是誰麼好像是跟著textalign一起的
 
 	guide = createGraphics(width_fixed, windowHeight, WEBGL);
 	guide.pixelDensity(PIXEL_DENSITY);
 	guide.textFont(f);
-	guide.textSize(18);
+	guide.textSize(20);
 	guide.textAlign(LEFT, BASELINE);
 	guide.fill(color(255, 255, 255));
-	guide.text("<< cursor here to see intro", 0, 0);
+	guide.text("why these textures?? ", 0, 0);
 
 	intro_background = createGraphics(width_fixed, windowHeight, WEBGL);
 	intro_background.pixelDensity(PIXEL_DENSITY);
 	intro_background.fill(color(255, 255, 255));
 	intro_background.rect(width_fixed * -0.5, height * -0.5, 500, height);//相對於圖形物件中心的偏移。矩形的寬度是 500，高度是 height。
-	intro_background.circle(50,50,500);
+	// intro_background.circle(50,50,10);
+	// intro_background.circle(100,50,10);
+
 
 	intro_title = createGraphics(width_fixed, windowHeight, WEBGL);
 	intro_title.pixelDensity(PIXEL_DENSITY);//默认像素密度为显示器的像素密度，可调用 pixelDensity(1) 以关闭此功能。调用 pixelDensity() 并不给予任何参数将返回该绘图的像素密度。
 	intro_title.textFont(f);
-	intro_title.textSize(120);
+	intro_title.textSize(80);
 	intro_title.textAlign(LEFT, BASELINE);
 	intro_title.fill(color(255, 255, 255));//先設白色才不會被影響
-	intro_title.text("HW02", 0, 0);
+	intro_title.text("Intro", 0, 0);
 
 	intro_content = createGraphics(width_fixed, windowHeight, WEBGL);
 	intro_content.pixelDensity(PIXEL_DENSITY);
 	intro_content.textFont(f);
-	intro_content.textSize(18);
+	intro_content.textSize(15);
 	intro_content.textAlign(LEFT, BASELINE);
 	intro_content.fill(color(255, 255, 255));
 	intro_content.textWrap(WORD);
-	intro_content.text("[ Computational Aesthetics ]\n[ Work by Leo Kao ]\n\nThis work demonstrates different hatching texture.\nYou can play with this shader by adjusting variables on the right side.\n\n:)", 0, 0, 450);
+	intro_content.text("Computational Aesthetics template by Leo Kao]\nNo.1:I use concentric circle and do some change at the quarter ,create seamless texture with adobe illustrator,looks like some ivy climbing the wall.\n\nNo.2 I try to achive negative effect by using #20384c,35556a,c6d9e6,3e7187,1f323e,which is drawn from actual negative-effect photos.\n\nNo.3: I want to experiment the relationship between the 3D and 2D worlds, so i use the optical illusion method to create 3D effects in Illustrator, then use it as a material, adjust the brightness of the material part, and create a difference in depth for the 2D pattern.\n\n You can click the button SHOW to watch the hatching effect on picture.", 0, 0, 450);
 }
 
 // PASS variable!-------------------- draw -------------------- //
